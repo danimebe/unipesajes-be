@@ -1,10 +1,14 @@
 const app = require('express')();
 const Product = require('../models/Product');
 const upload = require('../services/upload');
+const validateAdminToken = require('../middlewares/validateToken');
 
-app.post('/api/product', upload.multipleUpload, (req, res) => {
+app.post('/api/product', validateAdminToken, upload.multipleUpload, (req, res, next) => {
     upload.uploadFile(req, res, (req, res, body) => {
-        let product = new Product(body);
+
+        const { name, description, categories, images, manual, catalogue } = body;
+
+        let product = new Product({ name, description, categories, images, manual, catalogue });
 
         product.save((err, productDB) => {
             if (err) {
@@ -59,7 +63,7 @@ app.get('/api/product/:id', (req, res) => {
         })
 })
 
-app.get('/api/product/images/:productKey',upload.getFile);
+app.get('/api/product/images/:productKey', upload.getFile);
 
 
 

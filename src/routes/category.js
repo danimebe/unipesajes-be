@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Category = require('../models/Category');
+const validateAdminToken = require('../middlewares/validateToken');
 
 const postCategory = (req, res) => {
     let body = req.body
@@ -77,7 +78,7 @@ const getCategories = (req, res) => {
 
 
 router.route('/api/category')
-    .post(postCategory)
+    .post(validateAdminToken, postCategory)
     .get(getCategories)
 
 router.get('/api/category/:id', getCategory)

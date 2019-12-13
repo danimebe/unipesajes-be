@@ -16,6 +16,7 @@
   "author": "danimebe",
   "license": "ISC",
   "dependencies": {
+    "@hapi/boom": "^8.0.1",
     "aws-sdk": "^2.553.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",

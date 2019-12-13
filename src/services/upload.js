@@ -1,11 +1,10 @@
 const AWS = require('aws-sdk');
 const multer = require('multer');
+const config = require('../config/config');
 
 const BUCKET_NAME = 'unipesajes-files';
-const IAM_USER_KEY = process.env.AWS_PUBLIC_KEY;
-const IAM_USER_SECRET = process.env.AWS_SECRET_KEY;
-
-console.log(IAM_USER_KEY);
+const IAM_USER_KEY = config.awsPublicKey;
+const IAM_USER_SECRET = config.awsSecretKey;
 
 const storage = multer.memoryStorage({
     destination: (req, file, callback) => {
@@ -84,7 +83,6 @@ const getFile = (req, res) => {
             Key: req.params.productKey,
         };
         s3bucket.getObject(params, (err, data) => {
-            console.log(data);
             if (err) {
                 res.status(400).json({
                     ok: false,
